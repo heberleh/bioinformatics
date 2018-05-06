@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html><head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="googlebot" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  <script type="text/javascript" src="a_data/dummy.js"></script>
+
+  
+
+  
+
+  
+
+  
+    <link rel="stylesheet" type="text/css" href="a_data/result-light.css">
+  
+
+  
+    
+      <script type="text/javascript" src="a_data/pixi.js"></script>
+    
+  
+
+  <style type="text/css">
+    
+  </style>
+
+  <title>pixi latest version test by henryheberle</title>
+
+  
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+window.onload=function(){
+
+// pixi latest version test
+// Graphics added to RenderTexture
+
+var app = new PIXI.Application(width, height, {
+            backgroundColor: 0xffffff,
+            antialias: true, // default: false
+            transparent: false, // default: false
+            resolution: 1 // default: 1
+        });
+document.body.appendChild(renderer.view);
+
+function createTreeEdge(root, x0, y0, x1, y1, line_width=1, color = 0xFFFFFF, alpha=1){
+
+    var c0 = Math.cos(x0 = (x0 - 90) / 180 * Math.PI),
+        s0 = Math.sin(x0),
+        c1 = Math.cos(x1 = (x1 - 90) / 180 * Math.PI),
+        s1 = Math.sin(x1);
+    
+    let line = new Graphics();
+    line.lineStyle(line_width, color, alpha);
+    
+    let p0x =  y0 * c0;  // "target" point - start here
+    let p0y =  y0 * s0;
+
+    let p1x = y1 * c1;  // "source" point  - goes to
+    let p1y = y1 * s1;
+
+    line.moveTo(p0x, p0y);    
+    // create an arc
+    // (cx, cy, radius, startAngle, endAngle, anticlockwise)    
+    if (x1 !== x0){
+        line.arc(0, 0, Math.sqrt( Math.pow((p0x-p1x), 2) + Math.pow((p0y-p1y), 2) ), x0, x1);
+    }
+    
+    line.lineTo(y1 * c1, y1 * s1); // source point
+    root.addChild(line);
+    return line;
+
+}
+var tree = new PIXI.Container();
+stage.addChild(tree);
+tree.y = 200;
+tree.x = 200;
+createTreeEdge(stage, 50, 50, 100, 100);
+
+renderer.render(stage);
+
+}
+
+
+
+
+</script>
+
+  
+</head>
+
+<body>
+  
+  
+  <script>
+  // tell the embed parent frame the height of the content
+  if (window.parent && window.parent.parent){
+    window.parent.parent.postMessage(["resultsFrame", {
+      height: document.body.getBoundingClientRect().height,
+      slug: "9cn7s82u"
+    }], "*")
+  }
+</script>
+
+
+
+
+
+</body></html>
