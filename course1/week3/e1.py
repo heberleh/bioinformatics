@@ -143,6 +143,12 @@ def motifEnumeration(dna, k, d):
                 patterns.add(neighbor)
     return patterns
 
+
+def medianString(dna_list, k):
+    
+
+
+
 lines = sys.stdin.read().splitlines()
 
 line0 = lines[0].split(" ")
