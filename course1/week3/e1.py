@@ -1,5 +1,6 @@
 
 import sys # you must import "sys" to read from STDIN
+#import math 
 
 def skew(genome):    
     c = 0
@@ -24,7 +25,6 @@ def hamming(str1, str2):
             h+=1
     return h
 
-
 def sufix(word):
     return word[1:]
 
@@ -32,9 +32,9 @@ nucleotides = ['A','C','G','T']
 
 def neighbors(word, d):
     if d == 0:
-        return word
+        return set([word])
     if len(word) == 1:
-        return nucleotides
+        return set([nucleotides])
     neighborhood = set()
     sufix_word = sufix(word)
     for suf in neighbors(sufix_word, d):
@@ -44,7 +44,6 @@ def neighbors(word, d):
         else:
             neighborhood.add(word[0]+suf)
     return neighborhood
-
 
 def findAproximateMatches(genome, word, k):
     s = len(word)
@@ -64,6 +63,7 @@ def id(n):
         return 2
     else:
         return 3
+
 def patternToNumber(pattern):
     if len(pattern) ==  0:
         return 0
@@ -83,7 +83,6 @@ def computingFrequency(text, k, d):
             freq[patternToNumber(neighbor)] += 1
     return freq
 
-
 drev = {'A':'T', 'T':'A', 'C':'G', 'G':'C'}
 def reverse_complement(dna):
     return "".join([drev[b] for b in dna])[::-1]
@@ -102,7 +101,6 @@ def computingFrequencyRegRev(text, k, d):
             freq[patternToNumber(neighbor)] += 1      
             freq[patternToNumber(reverse_complement(neighbor))] += 1
     return freq
-
 
 def freqWords(text, k, d):
     words = set()
@@ -124,8 +122,7 @@ def freqWordsRegRev(text, k, d):
             words.add(numberToPattern(i, k))
     return words
 
-
-def motifEnumeration(dna, k, d):
+def MotifEnumeration(dna, k, d):
     patterns = set()
     for i in range(len(dna[0])-k+1):
         for neighbor in neighbors(dna[0][i:i+k],d): #text[i:i+k] 
@@ -143,19 +140,39 @@ def motifEnumeration(dna, k, d):
                 patterns.add(neighbor)
     return patterns
 
+def distance(pattern, dna_list):
+    k = len(pattern)
+    dist = 0
+    for dna in dna_list:        
+        hamdist = float("inf")
+        for i in range(len(dna)-k+1):
+            pattern2 = dna[i:i+k]
+            # for neighbor in neighbors(pattern2, k):
+            hamdist_aux = hamming(pattern2, pattern)
+            if hamdist_aux < hamdist:
+                hamdist = hamdist_aux
+        dist = dist + hamdist
+    return dist
 
 def medianString(dna_list, k):
-    
-
+    dist = float("inf")
+    for i in range(0,(4**k)):
+        pattern = numberToPattern(i,k)
+        dist_aux = distance(pattern, dna_list)
+        if dist_aux < dist:
+            dist = dist_aux
+            median = pattern
+    return median
 
 
 lines = sys.stdin.read().splitlines()
 
 line0 = lines[0].split(" ")
-k = line0[0]
-d = line0[1]
+k = int(line0[0])
+d = int(line0[1])
 dna = []
 for i in range(1,len(lines)):
     dna.append(lines[i])
 
-print(' '.join([str(s) for s in motifEnumeration(dna,int(k),int(d))]))
+#print(medianString(dna,k))
+print(' '.join([str(s) for s in MotifEnumeration(dna,k,d)]))
