@@ -165,14 +165,35 @@ def medianString(dna_list, k):
     return median
 
 
+
+def ProfileMostProbableKMerProblem(dna, k, probs_matrix):
+    idx = {'A':0, 'C': 1, 'G': 2, 'T':3}
+    max_prob = 0
+    selected_word = ""
+    for i in range(len(dna)-k+1):
+        word = dna[i:i+k]
+        prob = 0
+        for w in range(k):
+            prob += float(probs_matrix[idx[word[w]]][w])
+        if prob > max_prob:
+            max_prob = prob
+            selected_word = word
+    return selected_word
+
+
+
+
 lines = sys.stdin.read().splitlines()
 
-line0 = lines[0].split(" ")
-k = int(line0[0])
-d = int(line0[1])
-dna = []
-for i in range(1,len(lines)):
-    dna.append(lines[i])
+#line0 = lines[0].split(" ")
+dna = lines[0]
+#k = int(line0[0])
+#d = int(line0[1])
+k = int(lines[1])
+probs_matrix = []
+for i in range(2,len(lines)):
+    probs_matrix.append(lines[i].split(' '))
 
 #print(medianString(dna,k))
-print(' '.join([str(s) for s in MotifEnumeration(dna,k,d)]))
+#print(' '.join([str(s) for s in MotifEnumeration(dna,k,d)]))
+print(ProfileMostProbableKMerProblem(dna,k, probs_matrix))
