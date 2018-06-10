@@ -36,7 +36,7 @@ def Count(motifs):
     for symbol in "ACGT":
         count[symbol] = []
         for j in range(k):
-            count[symbol].append(0)
+            count[symbol].append(1)
 
     t = len(motifs)
     for i in range(t):
@@ -95,19 +95,40 @@ def Pr(text, profile):
     return P
 
 
+def distance(pattern, dna_list):
+    k = len(pattern)
+    dist = 0
+    for dna in dna_list:        
+        hamdist = float("inf")
+        for i in range(len(dna)-k+1):
+            pattern2 = dna[i:i+k]            
+            hamdist_aux = hamming(pattern2, pattern)
+            if hamdist_aux < hamdist:
+                hamdist = hamdist_aux
+        dist = dist + hamdist
+    return dist
+
+def hamming(str1, str2):
+    h = 0
+    for i in range(len(str1)):
+        if str1[i] != str2[i]:
+            h+=1
+    return h
+
 lines = sys.stdin.read().splitlines()
 
-line0 = lines[0].split(" ")
-#dna = lines[0]
-k = int(line0[0])
+#line0 = lines[0].split(" ")
+pattern = lines[0]
+#k = int(line0[0])
 #d = int(line0[1])
 #k = int(lines[1])
-t = int(line0[1])
+#t = int(line0[1])
 
-dna_list = []
-for i in range(1,len(lines)):
-    dna_list.append(lines[i])
+dna_list = lines[1].split(' ')
+# for i in range(1,len(lines)):
+#     dna_list.append(lines[i])
 
 #print(medianString(dna,k))
 #print(' '.join([str(s) for s in MotifEnumeration(dna,k,d)]))
-print('\n'.join(GreedyMotifSearch(dna_list, k, t)))
+#print('\n'.join(distance(pattern, dna_list)))
+print(distance(pattern, dna_list))
