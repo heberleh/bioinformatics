@@ -115,20 +115,73 @@ def hamming(str1, str2):
             h+=1
     return h
 
-lines = sys.stdin.read().splitlines()
 
-#line0 = lines[0].split(" ")
-pattern = lines[0]
-#k = int(line0[0])
-#d = int(line0[1])
-#k = int(lines[1])
-#t = int(line0[1])
+def medianString(dna_list, k):
+    dist = float("inf")
+    medians = []
+    for i in range(0,(4**k)):
+        pattern = numberToPattern(i,k)
+        dist_aux = distance(pattern, dna_list)
+        if dist_aux <= dist:
+            dist = dist_aux
+            median = pattern
+            medians.append(pattern)
+    #print(medians)
+    return median
 
-dna_list = lines[1].split(' ')
-# for i in range(1,len(lines)):
-#     dna_list.append(lines[i])
+nucleotides = ['A','C','G','T']
 
-#print(medianString(dna,k))
-#print(' '.join([str(s) for s in MotifEnumeration(dna,k,d)]))
-#print('\n'.join(distance(pattern, dna_list)))
-print(distance(pattern, dna_list))
+def id(n):
+    if n == 'A':
+        return 0
+    elif n == 'C':
+        return 1
+    elif n == 'G':
+        return 2
+    else:
+        return 3
+
+def patternToNumber(pattern):
+    if len(pattern) ==  0:
+        return 0
+    else:
+        return 4 * patternToNumber(pattern[:-1]) + id(pattern[-1])
+
+def numberToPattern(number,k):
+    if k == 1:
+        return nucleotides[number]
+    else:        
+        return numberToPattern(number // 4, k-1) + nucleotides[number % 4]
+
+
+
+
+
+#dna = """CTCGATGAGTAGGAAAGTAGTTTCACTGGGCGAACCACCCCGGCGCTAATCCTAGTGCCC
+# GCAATCCTACCCGAGGCCACATATCAGTAGGAACTAGAACCACCACGGGTGGCTAGTTTC
+# GGTGTTGAACCACGGGGTTAGTTTCATCTATTGTAGGAATCGGCTTCAAATCCTACACAG"""
+# dna = dna.split('\n')
+# print(medianString(dna,7))
+profile = {'A': [0.4,0.3,0.0,0.1,0.0,0.9],
+'C': [0.2,0.3,0.0,0.4,0.0,0.1],
+'G': [0.1,0.3,1.0,0.1,0.5,0.0],
+'T': [0.3,0.1,0.0,0.4,0.5,0.0]}
+print(Pr('AAGTTC', profile))
+
+# lines = sys.stdin.read().splitlines()
+
+# #line0 = lines[0].split(" ")
+# pattern = lines[0]
+# #k = int(line0[0])
+# #d = int(line0[1])
+# #k = int(lines[1])
+# #t = int(line0[1])
+
+# dna_list = lines[1].split(' ')
+# # for i in range(1,len(lines)):
+# #     dna_list.append(lines[i])
+
+# #print(medianString(dna,k))
+# #print(' '.join([str(s) for s in MotifEnumeration(dna,k,d)]))
+# #print('\n'.join(distance(pattern, dna_list)))
+# print(distance(pattern, dna_list))
