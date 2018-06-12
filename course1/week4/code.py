@@ -183,40 +183,15 @@ def RepeatedRandomizedMotifSearch(dna, k, t, rep):
             bestMotifs = motifs
     return bestMotifs
         
-        
-
-# dna = """CTCGATGAGTAGGAAAGTAGTTTCACTGGGCGAACCACCCCGGCGCTAATCCTAGTGCCC
-# GCAATCCTACCCGAGGCCACATATCAGTAGGAACTAGAACCACCACGGGTGGCTAGTTTC
-# GGTGTTGAACCACGGGGTTAGTTTCATCTATTGTAGGAATCGGCTTCAAATCCTACACAG"""
-# dna = dna.split('\n')
-# print(RepeatedRandomizedMotifSearch(dna,5,3,1))
-
-
-# print(medianString(dna,7))
-# profile = {'A': [0.4,0.3,0.0,0.1,0.0,0.9],
-# 'C': [0.2,0.3,0.0,0.4,0.0,0.1],
-# 'G': [0.1,0.3,1.0,0.1,0.5,0.0],
-# 'T': [0.3,0.1,0.0,0.4,0.5,0.0]}
-# print(Pr('AAGTTC', profile))
 
 lines = sys.stdin.read().splitlines()
 
 line0 = lines[0].split(" ")
-# pattern = lines[0]
 k = int(line0[0])
-# #d = int(line0[1])
-# #k = int(lines[1])
 t = int(line0[1])
 
-
-#dna_list = lines[1].split('')
 dna_list = []
 for i in range(1,len(lines)):
     dna_list.append(lines[i])
 
 print('\n'.join([str(s) for s in RepeatedRandomizedMotifSearch(dna_list,k,t,1000)]))
-
-# #print(medianString(dna,k))
-# #print(' '.join([str(s) for s in MotifEnumeration(dna,k,d)]))
-# #print('\n'.join(distance(pattern, dna_list)))
-# print(distance(pattern, dna_list))
