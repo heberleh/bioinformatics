@@ -161,11 +161,14 @@ def Motifs(profile, dna):
         motifs.append(ProfileMostProbableKmer(strand, len(profile['A']), profile))
     return motifs
 
-def RandomizedMotifSearch(dna, k, t):
+def RandomizedMotifSearch(dna, k, t, start_motifs=None):
     motifs = []
-    for strand in dna:
-        for r in np.random.randint(0,len(strand)-k+1,len(dna)):
-            motifs.append(strand[r:r+k])   
+    if start_motifs:
+        motifs = start_motifs
+    else:
+        for strand in dna:
+            for r in np.random.randint(0,len(strand)-k+1,len(dna)):
+                motifs.append(strand[r:r+k])   
     bestMotifs = motifs
     while(True):
         profile = Profile(motifs)        
@@ -228,15 +231,21 @@ def Runs1000TimesGibbsSampler(dna_list, k, t, N):
             best_motifs = motifs               
     return best_motifs
 
-lines = sys.stdin.read().splitlines()
+#lines = sys.stdin.read().splitlines()
 
-line0 = lines[0].split(" ")
-k = int(line0[0])
-t = int(line0[1])
-n = int(line0[2])
+# line0 = lines[0].split(" ")
+# k = int(line0[0])
+# t = int(line0[1])
+# n = int(line0[2])
 
-dna_list = []
-for i in range(1,len(lines)):
-    dna_list.append(lines[i])
+# dna_list = []
+# for i in range(1,len(lines)):
+#     dna_list.append(lines[i])
 
-print('\n'.join([s for s in Runs1000TimesGibbsSampler(dna_list,k,t,1000)]))
+# print('\n'.join([s for s in Runs1000TimesGibbsSampler(dna_list,k,t,1000)]))
+
+dna = ["AAGCCAAA", "AATCCTGG", "GCTACTTG", "ATGTTTTG"]
+start_motifs = ["CCA", "CCT", "CTT", "TTG"]
+
+print(RandomizedMotifSearch(dna, 3, 1, start_motifs))
+
