@@ -182,16 +182,61 @@ def RepeatedRandomizedMotifSearch(dna, k, t, rep):
         if Score(motifs) < Score(bestMotifs):
             bestMotifs = motifs
     return bestMotifs
-        
+
+import random
+def randomizedMotifs(dna, k):
+    size = len(dna[0])    
+    motifs = []
+    for line in dna:
+        i = random.randint(0,size-k)
+        motifs.append(line[i:i+k])
+    return motifs
+
+from random import choices
+def randomProfile(text, k, profile):
+    weights = []
+    for i in range(len(text) - k + 1):
+        kmer = text[i:i+k]       
+        weights.append(Pr(kmer, profile))
+    
+    choice = choices(range(len(text) - k + 1), weights)[0]    
+    return text[choice:choice+k]
+
+
+def GibbsSampler(dna, k, t, n):
+    motifs = randomizedMotifs(dna, k)
+    bestMotifs = motifs[:]
+    bestScore = Score(bestMotifs)
+    for rep in range(n):
+        i = random.randint(0,t-1)        
+        temp_motifs = motifs[:i] + motifs[(i + 1):]       
+        profile = Profile(temp_motifs)
+        motifs[i] = randomProfile(dna[i], k, profile)
+        score = Score(motifs)
+        if score < bestScore:
+            bestMotifs = motifs[:]
+            bestScore = score
+    return bestMotifs
+
+def Runs1000TimesGibbsSampler(dna_list, k, t, N):
+    best_score = 10000
+    for i in range(100):
+        motifs = GibbsSampler(dna_list, k, t, N)
+        score = Score(motifs) 
+        if score < best_score:
+            best_score = score
+            best_motifs = motifs               
+    return best_motifs
 
 lines = sys.stdin.read().splitlines()
 
 line0 = lines[0].split(" ")
 k = int(line0[0])
 t = int(line0[1])
+n = int(line0[2])
 
 dna_list = []
 for i in range(1,len(lines)):
     dna_list.append(lines[i])
 
-print('\n'.join([str(s) for s in RepeatedRandomizedMotifSearch(dna_list,k,t,1000)]))
+print('\n'.join([s for s in Runs1000TimesGibbsSampler(dna_list,k,t,1000)]))
