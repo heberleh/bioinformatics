@@ -1,6 +1,6 @@
 import sys, random
 
-def find_unbalanced_nodes(graph):
+def find_degrees(graph):
     in_degree = {}
     out_degree = {}
     for source in graph:
@@ -21,20 +21,26 @@ def find_unbalanced_nodes(graph):
 
     return {"in":in_degree, "out":out_degree}
 
-def prefix(pair):
+def prefixPair(pair):
     return "|".join([p[:-1] for p in pair.split("|")])
 
-def sufix(pair):
+def sufixPair(pair):
     return "|".join([p[1:] for p in pair.split("|")])
 
-def deBrujin(pairs):
-    adj_list = {prefix(pair): [] for pair in pairs}
+def deBrujinPairs(pairs):
+    adj_list = {prefixPair(pair): [] for pair in pairs}
     for pair in pairs:
-        adj_list[prefix(pair)].append(sufix(pair))
+        adj_list[prefixPair(pair)].append(sufixPair(pair))
     return adj_list
 
+def deBrujinKmers(kmers):
+    adj_list = {kmer[:-1]: [] for kmer in kmers}
+    for kmer in kmers:
+        adj_list[kmer[:-1]].append(kmer[1:])
+    return adj_list    
+
 def eulerianPath(graph):
-    degree = find_unbalanced_nodes(graph)
+    degree = find_degrees(graph)
     start = None
     for key in degree['in']:
         if degree['out'][key] - degree['in'][key] > 0:
@@ -70,7 +76,6 @@ def concat_pairs(s1, s2, k):
     splited2 = s2.split("|")
     return splited1[0][:k-1]+splited2[0][-1]+'|'+splited1[1][:k-1]+splited2[1][-1]
 
-
 def path_convert(path, k):
     new_path = []
     for i in range(len(path)-1):
@@ -96,17 +101,105 @@ def string_reconstruction(pairs, k, d):
 
     return s
 
-lines = sys.stdin.read().splitlines()
-k = int(lines[0].split(' ')[0])
-d =  int(lines[0].split(' ')[1])
-pairs = []
-for i in range(1,len(lines)):
-    pairs.append(lines[i])
+"""
+ MaximalNonBranchingPaths(Graph)
+        Paths ← empty list
+        for each node v in Graph
+            if v is not a 1-in-1-out node
+                if out(v) > 0
+                    for each outgoing edge (v, w) from v
+                        NonBranchingPath ← the path consisting of the single edge (v, w)
+                        while w is a 1-in-1-out node
+                            extend NonBranchingPath by the outgoing edge (w, u) from w 
+                            w ← u
+                        add NonBranchingPath to the set Paths
+        for each isolated cycle Cycle in Graph
+            add Cycle to Paths
+        return Paths
+"""
 
-# graph = deBrujin(pairs)
+def rm_e(g, src, trg):
+    g[src].remove(trg)
+    if len(g[src]) == 0:
+        g.pop(src)
+
+def degreesOne(degree, node):
+    return degree['in'][node] == 1 and degree['out'][node] == 1
+
+def maximalNonBranchingPaths(graph):
+    paths = []
+    degree = find_degrees(graph)
+    used_nodes = set()
+    for source in graph:
+        if degree['in'][source] != 1 or degree['out'][source] != 1:
+            if degree['out'][source] > 0:
+                for target in graph[source]:
+                    used_nodes.add(source)
+                    nonBranchingPath = [source, target]    
+                    current = target                                    
+                    while degreesOne(degree, current):
+                        used_nodes.add(current)
+                        nonBranchingPath.append(graph[current][0])
+                        current = graph[current][0]
+                    paths.append(nonBranchingPath)
+    
+    for source in graph:
+        if source not in used_nodes and degreesOne(degree, source):
+            used_nodes.add(source)
+            current = graph[source][0]
+            nonBranchingPath = [source]
+            while degreesOne(degree, current):
+                used_nodes.add(current)
+                nonBranchingPath.append(current)
+                current = graph[current][0]
+                if current == source:
+                    nonBranchingPath.append(current)
+                    paths.append(nonBranchingPath)
+                    break
+
+    return paths
+
+def concat_kmers(s1, s2):
+    #GTG + TGG = GTGG
+    return s1+s2[-1]
+
+def contigsKmers(kmers):
+    graph = deBrujinKmers(kmers)
+    paths = maximalNonBranchingPaths(graph)
+    contigs = [] 
+    for path in paths:
+        word = path[0]
+        for i in range(1, len(path)):
+            word = concat_kmers(word, path[i])
+        contigs.append(word)
+    return contigs
+
+
+lines = sys.stdin.read().splitlines()
+# k = int(lines[0].split(' ')[0])
+# d =  int(lines[0].split(' ')[1])
+# pairs = []
+# for i in range(1,len(lines)):
+#     pairs.append(lines[i])
+
+# graph = deBrujinPairs(pairs)
 # path = eulerianPath(graph)
 # path = path_convert(path,k)
 # s = string_reconstruction(path, k, d)
 # print(s)
 
-print(string_reconstruction(lines[1:],k,d))
+#print(string_reconstruction(lines[1:],k,d))
+
+
+# reading graph
+# graph = {}
+# for line in lines:
+#     l = line.split(" -> ")
+#     graph[l[0]] = []
+#     for trg in l[1].split(','):
+#         graph[l[0]].append(trg)
+# for path in maximalNonBranchingPaths(graph):
+#     print(" -> ".join(path))
+
+
+print(' '.join(sorted(contigsKmers(lines))))
