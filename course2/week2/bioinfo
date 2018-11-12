@@ -1,0 +1,30 @@
+ (AG  AG)
+  (GC  GC) 
+   (CA  CT)
+    (AG  TG)
+     (GC  GC)
+      (CT  CT)
+       (TG  TG)
+        (GC  GC)
+         (CT  CA)
+AGCAGCTGCTGCA
+
+
+
+GTG  GTG
+ TGG  TGA
+  GGT  GAG
+   GTC  AGA
+    TCG  GAT
+     CGT  ATG
+      GTG  TGT
+       TGA  GTT
+        GAG  TTG 
+         AGA  TGA   
+
+GTGGTCGTGAGATGTTGA (truth)
+GTGGTCGTGAGA GTTGA
+GTGGTCGTGAGA GTTGA
+
+TAATGCCATGGGATGTT
+
