@@ -174,6 +174,11 @@ def contigsKmers(kmers):
         contigs.append(word)
     return contigs
 
+def join_genome(path):
+    result = path[0]
+    for i in range(1,len(path)):
+        result += path[i][-1]
+    return result
 
 lines = sys.stdin.read().splitlines()
 # k = int(lines[0].split(' ')[0])
@@ -202,4 +207,25 @@ lines = sys.stdin.read().splitlines()
 #     print(" -> ".join(path))
 
 
-print(' '.join(sorted(contigsKmers(lines))))
+# print(' '.join(sorted(contigsKmers(lines))))
+
+# quiz ex 1
+# kmers = lines
+# graph = deBrujinKmers(kmers)
+# result = eulerianPath(graph)
+# print(join_genome(result))
+
+# quiz ex 3
+k=3
+d=1
+graph = deBrujinPairs(lines)
+path = eulerianPath(graph)
+path = path_convert(path,k)
+s = string_reconstruction(path, k, d)
+print(s)
+
+True or False: every Eulerian path in the paired de Bruijn graph constructed from a (k, d)-mer composition must spell out a solution to the String Reconstruction from Read-Pairs Problem.
+False
+
+True or False: read breaking can transform reads with imperfect coverage into reads with perfect coverage.
+True

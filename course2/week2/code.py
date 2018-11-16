@@ -264,7 +264,7 @@ graph = {}
 #     str_result+="->"+result[i]
 # print(str_result)
 
-#ex3
+# #ex3
 # kmers = [lines[i] for i in range(1,len(lines))]
 # graph = deBruijn_kmers(kmers)
 # result = eulerian_path(graph)
@@ -272,9 +272,9 @@ graph = {}
 
 
 #ex 4
-k = int(lines[0])
-kmers = binary_kmers(k)
-graph = getDeBrujin(kmers)
-path = EulerianCycle(graph)
-genome = join_genome(path[:-(k-1)])
-print(genome)
+# k = int(lines[0])
+# kmers = binary_kmers(k)
+# graph = getDeBrujin(kmers)
+# path = EulerianCycle(graph)
+# genome = join_genome(path[:-(k-1)])
+# print(genome)
