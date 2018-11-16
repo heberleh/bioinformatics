@@ -208,14 +208,6 @@ def consistent(speccheck, specref):
         if specref.count(c) < speccheck.count(c):
             return False
     return True
-    
-    # specrefaux = list(specref)
-    # try:
-    #     for m1 in speccheck:
-    #         specrefaux.remove(m1)
-    #     return True
-    # except ValueError:        
-    #     return False
 
 def pepNumberToString(pep_masses):
     seq = ""
