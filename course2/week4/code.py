@@ -89,9 +89,9 @@ def leaderboardCyclePeptideSequencing(spectrum, n, masses):
     leader_peptides = []    
     leader_score = 0
     while len(leaderboard) > 0:
-        good_peptides = expandPeptides(leaderboard, spectrum[-1], masses)          
-        for pep in leaderboard:
-            if sum(pep) == spectrum[-1]:                       
+        good_peptides = expandPeptides(leaderboard, spectrum[-1], masses) 
+        for pep in good_peptides:
+            if sum(pep) == spectrum[-1]:                                       
                 pep_score = score(pep, spectrum)
                 if pep_score > leader_score:
                     leader_peptides = [pep]
@@ -101,8 +101,54 @@ def leaderboardCyclePeptideSequencing(spectrum, n, masses):
         leaderboard = trim(good_peptides, spectrum, n)
     return leader_peptides
 
+def convolution(spectrum, m):
+    if 0 not in spectrum:
+        spectrum.append(0)
+    count = {}
+    allmasses = sorted(spectrum, reverse=True)
+    for i in range(len(allmasses)):
+        for j in range(i+1,len(allmasses)):
+            diff = abs(allmasses[i]-allmasses[j])    
+            if diff > 56 and diff < 201:          
+                if diff in count:
+                    count[diff]+=1
+                else:
+                    count[diff]=1
+    tuples = sorted([(key, count[key]) for key in count], key=lambda tup: tup[1], reverse=True)
+    cutoff = tuples[m-1][1]
+    for i in range(m+1,len(tuples)):
+            if tuples[i][1] < cutoff:
+                return sorted(list(set([tup[0] for tup in tuples[:i]])))
+    return sorted(list(set([tup[0] for tup in tuples])))
+    
+
+def convolutionAll(spectrum):
+    count = {}    
+    allmasses = sorted(spectrum, reverse=True)
+    for i in range(len(allmasses)):
+        for j in range(i+1,len(allmasses)):
+            diff = abs(allmasses[i]-allmasses[j])    
+            if diff != 0:          
+                if diff in count:
+                    count[diff]+=1
+                else:
+                    count[diff]=1
+    return sorted([(key, count[key]) for key in count], key=lambda tup: tup[1], reverse=True)
+
+
+def pepNumberToString(pep_masses):
+    seq = ""
+    for m in pep_masses:
+        seq+= getChar[m]
+    return seq
+
+
+
+
+
 
 lines = sys.stdin.read().splitlines()
+
 #pep_string = lines[0]
 #spectrum = [int(m) for m in lines[1].split(' ')]
 
@@ -110,7 +156,47 @@ lines = sys.stdin.read().splitlines()
 # cy_score = score(peptide, spectrum, fn=cyclicSpectrumInt)
 # print(cy_score)
 
-n = int(lines[0])
-spectrum = [int(m) for m in lines[1].split(' ')]
-final_peps = leaderboardCyclePeptideSequencing(spectrum, n, masses=range(57,201))
-print(' '.join(sorted(['-'.join(map(str,pep)) for pep in final_peps], reverse=True)))
+# n = int(lines[0])
+# spectrum = [int(m) for m in lines[1].split(' ')]
+# final_peps = leaderboardCyclePeptideSequencing(spectrum, n, masses=range(57,201))
+# print(' '.join(sorted(['-'.join(map(str,pep)) for pep in final_peps], reverse=True)))
+
+# result = convolutionAll(spectrum)
+# string = ""
+# for tup in result:
+#     string = ' '.join([string]+[str(tup[0])]*tup[1])
+# print(string)
+
+# m = int(lines[0])
+# n = int(lines[1])
+# spectrum = [int(m) for m in lines[2].split(' ')]
+# final_peps = leaderboardCyclePeptideSequencing(spectrum, n, masses=convolution(spectrum,m))
+# print(' '.join(sorted(['-'.join(map(str,pep)) for pep in final_peps], reverse=True)))
+
+# N 114.04293
+# Q 128.05858
+# Y 163.06333
+# V 99.06841
+# K 128.09496
+# L 113.08406
+# G 57.02146
+# F 147.06841
+# P 97.05276
+# W 186.07931
+# F 147.06841
+masses = [114.04293,128.05858,163.06333,99.06841,128.09496,113.08406,57.02146,147.06841,97.05276,186.07931,147.06841]
+masses = [int(round(x,0)) for x in masses]
+
+spectrum = [float(m)-1 for m in lines[2].split(' ')]
+spectrum = [int(round(x-0.5)) for x in spectrum]
+spectrum += [int(round(x+0.5)) for x in spectrum]
+spectrum += [int(round(x)) for x in spectrum]
+spectrum = sorted(list(set(spectrum)))
+m = int(lines[0])
+n = int(lines[1])
+
+masses += convolution(spectrum, m)
+masses = sorted(list(set(masses)))
+
+final_peps = leaderboardCyclePeptideSequencing(spectrum, n, masses=masses)
+print('\n'.join(sorted([' '.join(map(str,map(int,pep))) for pep in final_peps], reverse=True)))
