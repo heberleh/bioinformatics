@@ -99,6 +99,7 @@ def leaderboardCyclePeptideSequencing(spectrum, n, masses):
                 elif pep_score == leader_score:
                     leader_peptides.append(pep)                    
         leaderboard = trim(good_peptides, spectrum, n)
+    print(leader_score)
     return leader_peptides
 
 def convolution(spectrum, m):
@@ -184,19 +185,28 @@ lines = sys.stdin.read().splitlines()
 # P 97.05276
 # W 186.07931
 # F 147.06841
-masses = [114.04293,128.05858,163.06333,99.06841,128.09496,113.08406,57.02146,147.06841,97.05276,186.07931,147.06841]
-masses = [int(round(x,0)) for x in masses]
 
-spectrum = [float(m)-1 for m in lines[2].split(' ')]
-spectrum = [int(round(x-0.5)) for x in spectrum]
-spectrum += [int(round(x+0.5)) for x in spectrum]
-spectrum += [int(round(x)) for x in spectrum]
-spectrum = sorted(list(set(spectrum)))
-m = int(lines[0])
-n = int(lines[1])
+# masses = [getInt[c] for c in 'VKLFPWFNQY']
 
-masses += convolution(spectrum, m)
-masses = sorted(list(set(masses)))
+# spectrum = [float(m)-1 for m in lines[2].split(' ')]
+# # spectrum = [int(round(x-0.5)) for x in spectrum]
+# # spectrum += [int(round(x+0.5)) for x in spectrum]
+# spectrum = [int(round((x- 1.007) * (1 - 0.0004522))) for x in spectrum]  
+# spectrum = sorted(list(spectrum))
+# m = int(lines[0])
+# n = int(lines[1])
 
-final_peps = leaderboardCyclePeptideSequencing(spectrum, n, masses=masses)
-print('\n'.join(sorted([' '.join(map(str,map(int,pep))) for pep in final_peps], reverse=True)))
+# #masses += convolution(spectrum, m)
+# masses = sorted(list(set(masses)))
+
+# final_peps = leaderboardCyclePeptideSequencing(spectrum, n, masses=masses)
+# print('\n'.join(sorted([' '.join(map(str,map(int,pep))) for pep in final_peps], reverse=True)))
+
+# spec = [0,97,97,129,129,194,203,226,226,258,323,323,323,355,403,452]
+# pep_string = "PEEP"
+# peptide = stringPepToIntList(pep_string)
+# cy_score = score(peptide, spec, fn=linearSpectrumInt)
+# print(cy_score)
+
+spec = [0,57,118,179,236,240,301]
+print(convolutionAll(spec))

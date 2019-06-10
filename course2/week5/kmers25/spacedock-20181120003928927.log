@@ -1,0 +1,27 @@
+2018-11-20 00:21:34.110 [INFO ] - Downloading input data
+2018-11-20 00:21:34.288 [INFO ] - Downloading Samples...
+2018-11-20 00:21:34.355 [INFO ] - Downloading Sample 'SRR643156' (Id: 37372535; 2 files)
+2018-11-20 00:21:34.558 [INFO ] - Begin downloading file SRR643156_S2_L001_R1_001.fastq.gz.
+2018-11-20 00:21:43.340 [INFO ] - Finished downloading file SRR643156_S2_L001_R1_001.fastq.gz (100% downloaded).
+2018-11-20 00:21:43.341 [INFO ] - Begin downloading file SRR643156_S2_L001_R2_001.fastq.gz.
+2018-11-20 00:21:52.834 [INFO ] - Finished downloading file SRR643156_S2_L001_R2_001.fastq.gz (100% downloaded).
+2018-11-20 00:21:52.838 [INFO ] - Finished downloading Sample 'SRR643156' (Id: 37372535)
+2018-11-20 00:21:52.848 [INFO ] - Validating 'SRR643156_S2_L001_R1_001.fastq.gz'.
+2018-11-20 00:21:58.790 [INFO ] - Validating 'SRR643156_S2_L001_R2_001.fastq.gz'.
+2018-11-20 00:22:05.016 [INFO ] - No appresults to download
+2018-11-20 00:22:05.019 [INFO ] - No runs to download
+2018-11-20 00:22:05.071 [INFO ] -  Mounting Genomes
+2018-11-20 00:22:05.073 [INFO ] -   Using Genomes from S3
+2018-11-20 00:22:14.870 [INFO ] - Preparing to download image
+2018-11-20 00:22:14.918 [INFO ] - Downloading application image (attempt 1).
+2018-11-20 00:22:19.769 [INFO ] - Finished downloading application image.
+2018-11-20 00:22:20.021 [INFO ] - Starting application container (attempt 1).
+2018-11-20 00:22:20.590 [INFO ] - Application container is running.
+2018-11-20 00:39:21.901 [INFO ] - Application container exited and reported exit code: 0
+2018-11-20 00:39:22.100 [INFO ] - Uploading logs to AppSession
+2018-11-20 00:39:22.345 [INFO ] - Container log written to https://api.basespace.illumina.com/v1pre3/files/12951849417/content
+2018-11-20 00:39:22.603 [INFO ] - Uploading AppResults
+2018-11-20 00:39:22.607 [INFO ] - Uploading app results from project directory /media/ebs/agentdata/use1-prod_138144045_b0833afe1a54455d8c9ad732524cbd7b/data/output/appresults/105339234 (Exists = True)
+2018-11-20 00:39:22.609 [INFO ] - Uploading app results from app result directory /media/ebs/agentdata/use1-prod_138144045_b0833afe1a54455d8c9ad732524cbd7b/data/output/appresults/105339234/assembly (Exists = True)
+2018-11-20 00:39:28.899 [INFO ] - Finished uploading AppResults
+2018-11-20 00:39:28.922 [INFO ] - Uploading Samples

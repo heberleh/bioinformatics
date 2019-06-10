@@ -1,0 +1,46 @@
+﻿2018-11-20 00:39:22.927 [THREAD    1] [DEBUG] Illumina.SpaceDock.Uploader.Host.Program           Command line arguments:--a=2 --p=105339234 --s=138144045 --t=f328db7863504008af126a29c4e091f1 --d=/media/ebs/agentdata/use1-prod_138144045_b0833afe1a54455d8c9ad732524cbd7b/data/output/appresults/105339234/assembly --u=https://api.basespace.illumina.com --g=us-east-1 --f= --l=/media/ebs/agentdata/use1-prod_138144045_b0833afe1a54455d8c9ad732524cbd7b/logs
+2018-11-20 00:39:23.154 [THREAD    1] [INFO ] Illumina.SpaceDock.Uploader.Host.Program           Preparing to upload directory app results to 'assembly'.
+2018-11-20 00:39:23.156 [THREAD    1] [INFO ] Illumina.SpaceDock.Uploader.Host.Program           Preparing to upload directory samples to ''.
+2018-11-20 00:39:23.158 [THREAD    1] [DEBUG] Illumina.SpaceDock.Uploader.Host.Program           Creating BaseSpace client: https://api.basespace.illumina.com
+2018-11-20 00:39:23.284 [THREAD    1] [DEBUG] Illumina.SpaceDock.Uploader.Host.Program           Getting AppSession '138144045' from BaseSpace.
+2018-11-20 00:39:23.287 [THREAD    1] [DEBUG] Illumina.BaseSpace.SDK.PrivateBaseSpaceClient      GET:v1pre3/appsessions/138144045
+2018-11-20 00:39:23.288 [THREAD    1] [INFO ] Illumina.BaseSpace.SDK.PrivateBaseSpaceClient      operation starting: GET:v1pre3/appsessions/138144045 attempt 1
+2018-11-20 00:39:23.838 [THREAD    1] [INFO ] Illumina.BaseSpace.SDK.PrivateBaseSpaceClient      GET:v1pre3/appsessions/138144045 completed after 1 attempts and 549ms
+2018-11-20 00:39:23.839 [THREAD    1] [DEBUG] Illumina.SpaceDock.Uploader.Host.Program           Getting Project '105339234' from BaseSpace.
+2018-11-20 00:39:23.839 [THREAD    1] [DEBUG] Illumina.BaseSpace.SDK.PrivateBaseSpaceClient      GET:v1pre3/projects/105339234
+2018-11-20 00:39:23.839 [THREAD    1] [INFO ] Illumina.BaseSpace.SDK.PrivateBaseSpaceClient      operation starting: GET:v1pre3/projects/105339234 attempt 1
+2018-11-20 00:39:23.885 [THREAD    1] [INFO ] Illumina.BaseSpace.SDK.PrivateBaseSpaceClient      GET:v1pre3/projects/105339234 completed after 1 attempts and 45ms
+2018-11-20 00:39:23.910 [THREAD    1] [DEBUG] Illumina.SpaceDock.Uploader.AppResultCreator       Reading entity file at 'assembly.json'.
+2018-11-20 00:39:23.937 [THREAD    1] [DEBUG] Illumina.SpaceDock.Uploader.AppResultCreator       Deserialized entity: {"Description":"Analysis result","Name":"assembly","DateCreated":"0001-01-01T00:00:00.0000000"}
+2018-11-20 00:39:23.942 [THREAD    1] [INFO ] Illumina.SpaceDock.Uploader.AppResultCreator       Creating AppResult in project '105339234'.
+2018-11-20 00:39:23.948 [THREAD    1] [DEBUG] System.Reflection.MonoCMethod                      operation starting: Creating AppResult in Project '105339234'. attempt 1
+2018-11-20 00:39:24.545 [THREAD    1] [DEBUG] System.Reflection.MonoCMethod                      Creating AppResult in Project '105339234'. completed after 1 attempts and 596ms
+2018-11-20 00:39:24.545 [THREAD    1] [INFO ] System.Reflection.MonoCMethod                      Getting direct upload info for AppResult 'assembly' (179562404)
+2018-11-20 00:39:24.546 [THREAD    1] [DEBUG] Illumina.BaseSpace.SDK.PrivateBaseSpaceClient      GET:v1pre3/appresults/179562404/direct-upload-info
+2018-11-20 00:39:24.546 [THREAD    1] [INFO ] Illumina.BaseSpace.SDK.PrivateBaseSpaceClient      operation starting: GET:v1pre3/appresults/179562404/direct-upload-info attempt 1
+2018-11-20 00:39:24.582 [THREAD    1] [INFO ] Illumina.BaseSpace.SDK.PrivateBaseSpaceClient      GET:v1pre3/appresults/179562404/direct-upload-info completed after 1 attempts and 36ms
+2018-11-20 00:39:24.583 [THREAD    1] [INFO ] System.Reflection.MonoCMethod                      Attempting to upload directory, attempt '1'
+2018-11-20 00:39:24.594 [THREAD    1] [DEBUG] System.Reflection.MonoCMethod                      operation starting: uploading file attempt 1
+2018-11-20 00:39:24.594 [THREAD Threadpool worker] [DEBUG] System.Reflection.MonoCMethod                      operation starting: uploading file attempt 1
+2018-11-20 00:39:24.597 [THREAD    1] [INFO ] System.Reflection.MonoCMethod                      Uploading 'contigs.fasta' (3.202 MB).
+2018-11-20 00:39:24.597 [THREAD Threadpool worker] [INFO ] System.Reflection.MonoCMethod                      Uploading 'scaffolds.fasta' (3.203 MB).
+2018-11-20 00:39:24.599 [THREAD Threadpool worker] [INFO ] Illumina.SpaceDock.Uploader.S3.S3Client            Upload to region: us-east-1
+2018-11-20 00:39:24.599 [THREAD    1] [INFO ] Illumina.SpaceDock.Uploader.S3.S3Client            Upload to region: us-east-1
+2018-11-20 00:39:27.310 [THREAD Threadpool worker] [INFO ] System.Reflection.MonoCMethod                      Finished uploading 'scaffolds.fasta' in 2.71 seconds
+2018-11-20 00:39:27.311 [THREAD Threadpool worker] [DEBUG] System.Reflection.MonoCMethod                      Retrieving object etag
+2018-11-20 00:39:27.390 [THREAD    1] [INFO ] System.Reflection.MonoCMethod                      Finished uploading 'contigs.fasta' in 2.79 seconds
+2018-11-20 00:39:27.390 [THREAD    1] [DEBUG] System.Reflection.MonoCMethod                      Retrieving object etag
+2018-11-20 00:39:27.820 [THREAD    1] [DEBUG] System.Reflection.MonoCMethod                      uploading file completed after 1 attempts and 3225ms
+2018-11-20 00:39:27.821 [THREAD    1] [DEBUG] System.Reflection.MonoCMethod                      operation starting: uploading file attempt 1
+2018-11-20 00:39:27.821 [THREAD    1] [INFO ] System.Reflection.MonoCMethod                      Uploading 'spades.log' (42.548 KB).
+2018-11-20 00:39:27.822 [THREAD    1] [INFO ] Illumina.SpaceDock.Uploader.S3.S3Client            Upload to region: us-east-1
+2018-11-20 00:39:27.868 [THREAD Threadpool worker] [DEBUG] System.Reflection.MonoCMethod                      uploading file completed after 1 attempts and 3273ms
+2018-11-20 00:39:28.241 [THREAD    1] [INFO ] System.Reflection.MonoCMethod                      Finished uploading 'spades.log' in 0.42 seconds
+2018-11-20 00:39:28.242 [THREAD    1] [DEBUG] System.Reflection.MonoCMethod                      Retrieving object etag
+2018-11-20 00:39:28.712 [THREAD    1] [DEBUG] System.Reflection.MonoCMethod                      uploading file completed after 1 attempts and 891ms
+2018-11-20 00:39:28.714 [THREAD    1] [INFO ] System.Reflection.MonoCMethod                      Posting files for AppResult 'assembly'.
+2018-11-20 00:39:28.718 [THREAD    1] [DEBUG] Illumina.BaseSpace.SDK.PrivateBaseSpaceClient      POST:v1pre3/appresults/179562404/direct-upload-info
+2018-11-20 00:39:28.719 [THREAD    1] [INFO ] Illumina.BaseSpace.SDK.PrivateBaseSpaceClient      operation starting: POST:v1pre3/appresults/179562404/direct-upload-info attempt 1
+2018-11-20 00:39:28.764 [THREAD    1] [INFO ] Illumina.BaseSpace.SDK.PrivateBaseSpaceClient      POST:v1pre3/appresults/179562404/direct-upload-info completed after 1 attempts and 45ms
+2018-11-20 00:39:28.765 [THREAD    1] [INFO ] System.Reflection.MonoCMethod                      Finished posting files for AppResult 'assembly'
+2018-11-20 00:39:28.765 [THREAD    1] [INFO ] System.Reflection.MonoCMethod                      Finished uploading directory 'assembly'.
